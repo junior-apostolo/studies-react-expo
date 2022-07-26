@@ -6,7 +6,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Button onPress={() => console.log("To aqui")}>Acessar camera</Button>
-      <Text>Open up App.tsx to start working on your app!</Text>
       <StatusBar style="auto" />
     </View>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native'
-import {} from "./styles";
+import {BtnOpacity,Txt} from "./styles";
+// import {Camera, CameraType} from 'expo-camera'
 
 interface Props {
     onPress: () => void;
@@ -9,8 +9,8 @@ interface Props {
 
 export function Button({onPress,children}:Props){
     return (
-        <TouchableOpacity>
-            <Text>{children}</Text>
-        </TouchableOpacity>
+        <BtnOpacity activeOpacity={0.6}>
+            <Txt>{children}</Txt>
+        </BtnOpacity>
     )
 }
