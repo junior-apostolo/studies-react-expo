@@ -7,6 +7,8 @@ export const BtnOpacity = styled.TouchableOpacity`
     border-radius: 6px;
     justify-content: center;
     padding: 10px;
+    align-self: flex-end;
+    align-items: center;
 `;
 
 export const Txt = styled.Text`

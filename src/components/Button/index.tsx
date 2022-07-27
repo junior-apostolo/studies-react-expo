@@ -1,16 +1,17 @@
-import React from 'react';
-import {BtnOpacity,Txt} from "./styles";
-// import {Camera, CameraType} from 'expo-camera'
+import React, { useEffect, useState } from 'react';
+import { BtnOpacity, Txt } from "./styles";
 
 interface Props {
-    onPress: () => void;
-    children: React.ReactNode;
+  children: React.ReactNode;
+  onPress: () => void
 }
 
-export function Button({onPress,children}:Props){
-    return (
-        <BtnOpacity activeOpacity={0.6}>
-            <Txt>{children}</Txt>
-        </BtnOpacity>
-    )
+export function Button({ onPress, children }: Props) {
+  return (
+      <BtnOpacity
+        onPress={onPress}
+        activeOpacity={0.6}>
+        <Txt>{children}</Txt>
+      </BtnOpacity>
+  )
 }

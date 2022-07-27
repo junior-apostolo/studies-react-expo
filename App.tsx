@@ -1,11 +1,72 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, Text, View } from 'react-native';
 import { Button } from './src/components/Button';
+import React, { useEffect, useRef, useState } from 'react';
+import { Camera, CameraType } from 'expo-camera'
+import { FontAwesome } from '@expo/vector-icons'
+
+interface IPhoto{
+  height?: number,
+  uri?: string,
+  width?: number
+}
 
 export default function App() {
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null)
+  const [type, setType] = useState(CameraType.back)
+  const camRef = useRef<Camera | null>()
+  const [capturedPhoto, setCapturedPhoto] = useState<string | null>()
+  const [open, setOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync()
+      console.log(status)
+      setHasPermission(status === 'granted')
+    })();
+  }, [])
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>
+  }
+
+  async function takePicture() {
+    if (camRef) {
+      const data = await camRef?.current?.takePictureAsync();
+      console.log(data)
+      setCapturedPhoto(data?.uri)
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Button onPress={() => console.log("To aqui")}>Acessar camera</Button>
+      <Camera style={styles.camera} type={type} ref={(camera) => {
+        camRef.current = camera
+      }}>
+        <View style={styles.buttonContainer}>
+          <Button
+            onPress={() => {
+              setType(type === CameraType.back ? CameraType.front : CameraType.back)
+            }}>{type === CameraType.back ? 'Camera Frontal' : 'Camera Traseira'}</Button>
+          <Button onPress={takePicture}>
+            <FontAwesome name='camera' size={23} color="#fff" />
+          </Button>
+        </View>
+      </Camera>
+
+      {/* {capturedPhoto && 
+        <Modal
+         animationType='slide'
+         transparent={false}
+         visible={open}
+        >
+        
+        </Modal>
+      } */}
       <StatusBar style="auto" />
     </View>
   );
@@ -14,8 +75,15 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  camera: {
+    flex: 1
+  },
+  buttonContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    margin: 40,
   },
 });
