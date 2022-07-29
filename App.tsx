@@ -3,7 +3,7 @@ import { Modal, StyleSheet, Text, View } from 'react-native';
 import { Button } from './src/components/Button';
 import React, { useEffect, useRef, useState } from 'react';
 import { Camera, CameraType } from 'expo-camera'
-import { FontAwesome } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 
 interface IPhoto{
   height?: number,
@@ -51,9 +51,11 @@ export default function App() {
           <Button
             onPress={() => {
               setType(type === CameraType.back ? CameraType.front : CameraType.back)
-            }}>{type === CameraType.back ? 'Camera Frontal' : 'Camera Traseira'}</Button>
+            }}>
+              <Ionicons name='camera-reverse' size={25} color="#fff"/>
+          </Button>
           <Button onPress={takePicture}>
-            <FontAwesome name='camera' size={23} color="#fff" />
+            <Ionicons name='camera' size={25} color="#fff" />
           </Button>
         </View>
       </Camera>
